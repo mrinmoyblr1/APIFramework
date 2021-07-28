@@ -14,19 +14,24 @@ import io.restassured.http.ContentType;
 import io.restassured.specification.RequestSpecification;
 
 public class Utils {
-	RequestSpecification req;
+	public static RequestSpecification req;
 
 	public RequestSpecification requestSpecification() throws IOException {
-		PrintStream log = new PrintStream(new FileOutputStream("looging.txt"));
+		if (req == null) {
+			PrintStream log = new PrintStream(new FileOutputStream("looging.txt"));
 
-		req = new RequestSpecBuilder().setBaseUri(getGlobalValues("baseUrl")).addQueryParam("Key", "qaclick123")
-				.addFilter(RequestLoggingFilter.logRequestTo(log)).addFilter(ResponseLoggingFilter.logResponseTo(log))
-				.setContentType(ContentType.JSON).build();
+			req = new RequestSpecBuilder().setBaseUri(getGlobalValues("baseUrl")).addQueryParam("Key", "qaclick123")
+					.addFilter(RequestLoggingFilter.logRequestTo(log))
+					.addFilter(ResponseLoggingFilter.logResponseTo(log)).setContentType(ContentType.JSON).build();
+			return req;
+		}
 		return req;
 	}
 
+	
+	
+	
 	public static String getGlobalValues(String Key) throws IOException {
-
 		FileInputStream fis = new FileInputStream(
 				"C:\\Users\\Mrinmoy\\eclipse-workspace-2\\APIFramework\\src\\test\\java\\resources\\global.properties");
 		Properties prop = new Properties();
