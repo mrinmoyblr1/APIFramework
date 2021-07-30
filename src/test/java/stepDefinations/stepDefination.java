@@ -28,15 +28,19 @@ public class stepDefination extends Utils {
 	public void add_Place_Payload(String name, String language, String address) throws IOException {
 		res = given().spec(requestSpecification()).body(data.AddPlacePayload(name, language, address));
 	}
+	
+	
+	
+	
 
 	@When("User calls {string} with {string} http Request")
 	public void user_calls_with_http_Request(String resource, String method) {
 		// Constructor will be called with the value of resource which I will pass
 		APIResources resourceAPI = APIResources.valueOf(resource);
-		System.out.println(resourceAPI.getResource());
-
 		resSpec = new ResponseSpecBuilder().expectStatusCode(200).expectContentType(ContentType.JSON).build();
 
+		System.out.println("+++++++++++++++++");
+		
 		if (method.equalsIgnoreCase("POST")) {
 			response = res.when().post(resourceAPI.getResource());
 			// .then().spec(resSpec).extract().response();
@@ -44,7 +48,13 @@ public class stepDefination extends Utils {
 			response = res.when().get(resourceAPI.getResource());
 			// .then().spec(resSpec).extract().response();
 		}
-	}
+		
+		
+		System.out.println("+++++++++++++++++");
+		System.out.println(response.asString());
+		
+	}	
+	
 
 	@SuppressWarnings("deprecation")
 	@Then("The API call got success with Status Code {int}")
@@ -56,18 +66,46 @@ public class stepDefination extends Utils {
 
 	@Then("{string} in response body is {string}")
 	public void in_response_body_is(String KeyValue, String ExpectedValue) {
-		
+
 		assertEquals(getJsonPath(response, KeyValue), ExpectedValue);
 	}
 
+	
+	
+	
+	
 	@Then("Verify place_id created maps to {string} using {string}")
-	public void verify_place_id_created_maps_to_using(String string, String resource) throws IOException {
+	public void verify_place_id_created_maps_to_using(String expectedName, String resource) throws IOException {
+
+		String placeID = getJsonPath(response, "place_id");		
+		res = given().spec(requestSpecification()).queryParam("place_id", placeID);
 		
-		String placeID=getJsonPath(response, "place_id");
-		res = given().spec(requestSpecification()).queryParam("place_id",placeID);
 		user_calls_with_http_Request(resource, "GET");
 		
 		
-	}
+		
+		
+		
+		
+//		String placeID1 = getJsonPath(response, "place_id");		
+//		System.out.println("==========="+placeID);
+		
+		
+//		String resp=response.asString();
+//		JsonPath js = new JsonPath(resp);
+//		System.out.println(js.get("name").toString());
+		
+		
+		//String actualName = getJsonPath(response, "name");
+		
 
+		//assertEquals(expectedName,actualName);
+		
+//		System.out.println(expectedName);
+//		System.out.println(actualName);
+		
+		
+	}
+	
+	
 }
