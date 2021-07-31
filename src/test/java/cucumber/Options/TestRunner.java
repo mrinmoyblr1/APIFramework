@@ -7,7 +7,8 @@ import io.cucumber.junit.CucumberOptions;
 
 @RunWith(Cucumber.class)
 @CucumberOptions(features = "src/test/java/features",
-//tags = "@PortalTest,@SeleniumTest1,@SeleniumTest2", 
+//tags = "@PortalTest,@SeleniumTest1,@SeleniumTest2,@Sanity",
+//tags = "@DeletePlace,@AddPlace",
 		glue = { "stepDefinations" },
 		// tags="@PortalTest",
 		// monochrome=true,
@@ -17,7 +18,7 @@ import io.cucumber.junit.CucumberOptions;
 		// strict=true --> this will make sure to to check all the steps is passed then
 		// only
 		// result will be passed. If any steps is skipped the the test will be failed.
-		plugin = { "pretty", "html:target/cucumber", "json:target/cucumber.json", "junit:target/cukes.xml" })
+		plugin = { "pretty", "html:target/cucumber", "json:target/jsonReports/cucumber-report.json", "junit:target/cukes.xml" })
 
 public class TestRunner {
 

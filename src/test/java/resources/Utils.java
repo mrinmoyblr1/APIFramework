@@ -35,7 +35,7 @@ public class Utils {
 	
 	public static String getGlobalValues(String Key) throws IOException {
 		FileInputStream fis = new FileInputStream(
-				"/Users/Mrinmoy/Documents/Study_Materials/APIFramework/src/test/java/resources/global.properties");
+				"C:\\Users\\Mrinmoy\\eclipse-workspace-2\\APIFramework\\src\\test\\java\\resources\\global.properties");
 		Properties prop = new Properties();
 		prop.load(fis);
 		return prop.getProperty(Key);
@@ -45,9 +45,13 @@ public class Utils {
 	
 	public String getJsonPath(Response response, String Key)
 	{
-		String resp=response.asString();
+		
+		String resp = response.asString();
 		JsonPath js = new JsonPath(resp);
-		return js.getString(Key).toString();		
+		return js.get(Key).toString();
+		
+		
+
 	}
 	
 
